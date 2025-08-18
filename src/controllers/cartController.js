@@ -19,9 +19,9 @@ export const addToCart = async (req, res) => {
       return res.status(400).json({ message: 'Not enough stock available' });
     }
 
-    let cart = await Cart.findOne({ user: req.user.userId });
+    let cart = await Cart.findOne({ user: req.user.id });
     if (!cart) {
-      cart = new Cart({ user: req.user.userId, items: [] });
+      cart = new Cart({ user: req.user.id, items: [] });
     }
 
     const existingItem = cart.items.find(item => item.product.equals(productId));
