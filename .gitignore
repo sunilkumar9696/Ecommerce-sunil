@@ -1,0 +1,54 @@
+# 🔐 Environment variables
+.env
+.env.*.local
+
+# 🗑 Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 📦 Node dependencies
+node_modules/
+
+# 🧪 Test coverage
+coverage/
+.nyc_output/
+
+# 🧹 Build output
+dist/
+build/
+
+# 🧠 OS/System files
+.DS_Store
+Thumbs.db
+
+# 🔧 IDE/editor config files
+.vscode/
+.idea/
+*.swp
+
+# 🧪 Test snapshots
+__snapshots__/
+
+# 🚫 Ignore uploads (optional – comment out if needed)
+uploads/
+public/uploads/
+tmp/
+temp/
+
+# ⛔ PM2 Logs (if using pm2 process manager)
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# 📁 Dependency cache
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# ⚙️ Optional ESLint / Prettier cache
+.eslintcache
+.prettiercache
