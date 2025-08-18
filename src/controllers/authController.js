@@ -11,7 +11,6 @@ const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TO
 export const requestOTP = async (req, res) => {
   try {
     const { mobile } = req.body;
-    console.log(mobile);
     
     if (!mobile) return res.status(400).json({ message: 'Mobile number required' });
 
