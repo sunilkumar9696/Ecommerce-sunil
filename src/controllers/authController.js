@@ -58,7 +58,7 @@ export const verifyOTP = async (req, res) => {
     const token = jwt.sign(
       { id: user._id.toString(), mobile: user.mobile },
       process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES || '1h' }
+      { expiresIn: process.env.JWT_EXPIRES || '1d' }
     );
     
     
