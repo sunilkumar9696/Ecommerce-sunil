@@ -29,10 +29,12 @@ const productSchema = new mongoose.Schema({
     type: String,
     enum: ['men', 'women', 'kids'], // only used for accessories
   },
-  images: {
-    type: [String], // path to the images
-    default:[]
-  },
+  images: [
+  {
+    url: { type: String, required: true },
+    public_id: { type: String, required: true }
+  }
+],
   variants: [productDetails],
   createdAt: {
     type: Date,
