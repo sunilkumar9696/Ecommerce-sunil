@@ -42,19 +42,32 @@ export const getCart = async (req, res) => {
   try {
     console.log('req.user in getCart:', req.user);
 
-    const cart = await Cart.findOne({ user: req.user.id }).populate('items.product'); //this is the problem
-    console.log(cart);
-    
-    if (!cart) return res.status(500).json({ items: [] });
+    // Ensure user ID is cast to ObjectId
+    const userId = req.user.id;
 
+    // Find the cart and populate product details
+    const cart = await Cart.findOne({ user: userId }).populate('items.product');
+
+    if (!cart) {
+      return res.status(200).json({ items: [] }); // ✅ Use 200 for empty cart
+    }
+
+    // Remove any items where the product no longer exists
+    cart.items = cart.items.filter(item => item.product);
+
+    // Save the cleaned cart if any item was removed
+    await cart.save();
+
+    // Calculate total price for each item safely
     const cartWithPrice = cart.items.map(item => ({
       ...item.toObject(),
       total: calculatePrice(item.product, item.quantity),
     }));
 
-    res.status(200).json({ items: cartWithPrice });
+    return res.status(200).json({ items: cartWithPrice });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error in getCart:', err);
+    return res.status(500).json({ error: err.message });
   }
 };
 
