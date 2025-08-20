@@ -32,7 +32,7 @@ export const addToCart = async (req, res) => {
     }
 
     await cart.save();
-    res.json(cart);
+    res.status(200).json(cart);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -48,7 +48,7 @@ export const getCart = async (req, res) => {
       total: calculatePrice(item.product, item.quantity),
     }));
 
-    res.json({ items: cartWithPrice });
+    res.status(200).json({ items: cartWithPrice });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -79,7 +79,7 @@ export const updateCartItem = async (req, res) => {
       total: calculatePrice(item.product, item.quantity),
     };
 
-    res.json({ message: 'Quantity updated', item: updatedItem });
+    res.status(200).json({ message: 'Quantity updated', item: updatedItem });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -94,7 +94,7 @@ export const removeCartItem = async (req, res) => {
 
     cart.items = cart.items.filter(item => !item._id.equals(itemId));
     await cart.save();
-    res.json({ message: 'Item removed', cart });
+    res.status(200).json({ message: 'Item removed', cart });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
