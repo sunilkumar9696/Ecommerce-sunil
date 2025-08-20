@@ -41,12 +41,14 @@ app.use(cookieParser());
 //   credentials: true,
 // }));
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // if using cookies or auth headers
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true // if using cookies or auth headers
+// }));
+
+app.use(cors ({origin : '*'}))
 
 // API Routes
 // app.use('/api', router);
