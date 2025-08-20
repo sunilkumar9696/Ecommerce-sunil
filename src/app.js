@@ -36,9 +36,16 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Enable CORS
+// app.use(cors({
+//   origin:'http://localhost:5173',
+//   credentials: true,
+// }));
+
 app.use(cors({
-  origin:'http://localhost:5173',
-  credentials: true,
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // if using cookies or auth headers
 }));
 
 // API Routes
