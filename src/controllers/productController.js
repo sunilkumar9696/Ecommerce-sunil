@@ -13,7 +13,7 @@ export const getProducts = async (req, res) => {
       .skip((page - 1) * limit)
       .limit(Number(limit));
 
-    res.json(products);
+    res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
