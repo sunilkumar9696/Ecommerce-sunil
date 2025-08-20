@@ -40,8 +40,12 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user.id }).populate('items.product');
-    if (!cart) return res.json({ items: [] });
+    console.log('req.user in getCart:', req.user);
+
+    const cart = await Cart.findOne({ user: req.user.id }).populate('items.product'); //this is the problem
+    console.log(cart);
+    
+    if (!cart) return res.status(500).json({ items: [] });
 
     const cartWithPrice = cart.items.map(item => ({
       ...item.toObject(),
