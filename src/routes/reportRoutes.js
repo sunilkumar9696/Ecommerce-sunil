@@ -5,9 +5,9 @@ import { verifyToken } from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 // SALES
-router.get('/sales/range', getSalesRange);   // requires from & to
-router.get('/sales/from', getSalesFrom);     // only from
-router.get('/sales/to', getSalesTo);         // only to
+router.get('/sales/range', getSalesRange);
+router.get('/sales/from', getSalesFrom);
+router.get('/sales/to', getSalesTo);
 
 // TOP PRODUCTS
 router.get('/top-products/range', getTopProductsRange);

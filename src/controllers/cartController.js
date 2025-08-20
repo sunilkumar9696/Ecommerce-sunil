@@ -47,7 +47,8 @@ export const getCart = async (req, res) => {
 
     // Find the cart and populate product details
     const cart = await Cart.findOne({ user: userId }).populate('items.product');
-
+    console.log(cart);
+    
     if (!cart) {
       return res.status(200).json({ items: [] }); // ✅ Use 200 for empty cart
     }
