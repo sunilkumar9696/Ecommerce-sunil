@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 // Enable CORS
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || '*',
+  origin:'*',
   credentials: true,
 }));
 
