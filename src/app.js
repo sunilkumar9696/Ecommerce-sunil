@@ -16,6 +16,7 @@ import wishlistRoutes from './routes/wishlistRoutes.js'
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cors ({origin : '*'}))
 
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
@@ -48,7 +49,6 @@ app.use(cookieParser());
 //   credentials: true // if using cookies or auth headers
 // }));
 
-app.use(cors ({origin : '*'}))
 
 // API Routes
 // app.use('/api', router);

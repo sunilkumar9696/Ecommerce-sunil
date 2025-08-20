@@ -24,7 +24,7 @@ export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
-    res.json(product);
+    res.status(200).json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -37,7 +37,7 @@ export const createProduct = async (req, res) => {
 
     let parsedVariants = [];
     try {
-      parsedVariants = variants ? JSON.parse(variants) : [];
+      parsedVariants = variants ? JSON.status(200).parse(variants) : [];
     } catch (e) {
       return res.status(400).json({ message: 'Invalid JSON format for variants.' });
     }
@@ -91,7 +91,7 @@ export const updateProduct = async (req, res) => {
     if (variants) product.variants = JSON.parse(variants); // if provided
 
     const updated = await product.save();
-    res.json(updated);
+    res.status(200).json(updated);
   } catch (err) {
     console.error(err);
     res.status(400).json({ message: err.message });
@@ -108,7 +108,7 @@ export const deleteProduct = async (req, res) => {
     }
 
     await product.deleteOne();
-    res.json({ message: 'Product deleted successfully' });
+    res.status(200).json({ message: 'Product deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
