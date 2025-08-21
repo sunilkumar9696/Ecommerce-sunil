@@ -37,7 +37,7 @@ export const createProduct = async (req, res) => {
 
     let parsedVariants = [];
     try {
-      parsedVariants = variants ? JSON.status(200).parse(variants) : [];
+      parsedVariants = variants ? JSON.parse(variants) : [];
     } catch (e) {
       return res.status(400).json({ message: 'Invalid JSON format for variants.' });
     }
