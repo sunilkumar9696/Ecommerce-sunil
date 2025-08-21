@@ -2,13 +2,17 @@ import Cart from '../models/Cart.js';
 import Product from '../models/Product.js';
 
 const calculatePrice = (product, quantity) => {
+  if (!product.variants || product.variants.length === 0) return 0;
+
+  const variant = product.variants[0]; // Default: first variant
   const discount = (product.discount || 0) / 100;
-  const price = product.price * (1 - discount);
+  const price = variant.price * (1 - discount);
+
   return price * quantity;
 };
 
 export const addToCart = async (req, res) => {
-  
+
   const { productId, quantity = 1 } = req.body;
 
   try {
@@ -40,37 +44,40 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   try {
-    console.log('req.user in getCart:', req.user);
-
-    // Ensure user ID is cast to ObjectId
     const userId = req.user.id;
 
-    // Find the cart and populate product details
     const cart = await Cart.findOne({ user: userId }).populate('items.product');
-    console.log(cart);
-    
+
     if (!cart) {
-      return res.status(200).json({ items: [] }); // ✅ Use 200 for empty cart
+      return res.status(200).json({ items: [], allTotal: 0 });
     }
 
-    // Remove any items where the product no longer exists
+    // Remove items with deleted products
     cart.items = cart.items.filter(item => item.product);
-
-    // Save the cleaned cart if any item was removed
     await cart.save();
 
-    // Calculate total price for each item safely
-    const cartWithPrice = cart.items.map(item => ({
-      ...item.toObject(),
-      total: calculatePrice(item.product, item.quantity),
-    }));
+    // Calculate total for each item
+    const cartWithPrice = cart.items.map(item => {
+      const total = calculatePrice(item.product, item.quantity);
+      return {
+        ...item.toObject(),
+        total
+      };
+    });
 
-    return res.status(200).json({ items: cartWithPrice });
+    // Calculate allTotal
+    const allTotal = cartWithPrice.reduce((sum, item) => sum + item.total, 0);
+
+    return res.status(200).json({
+      items: cartWithPrice,
+      allTotal
+    });
   } catch (err) {
     console.error('Error in getCart:', err);
     return res.status(500).json({ error: err.message });
   }
 };
+
 
 export const updateCartItem = async (req, res) => {
   const { itemId } = req.params;
