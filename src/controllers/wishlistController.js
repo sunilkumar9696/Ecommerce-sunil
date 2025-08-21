@@ -37,23 +37,30 @@ export const addToWishlist = async (req, res) => {
 export const removeFromWishlist = async (req, res) => {
   try {
     const { productId } = req.params;
-    const { variantId } = req.query;
     const userId = req.user.id;
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    user.wishlist = user.wishlist.filter(item =>
-      !(item.productId.toString() === productId &&
-        (!variantId || item.variantId?.toString() === variantId))
-    );
+    const beforeCount = user.wishlist.length;
+
+    // Remove all items with matching productId
+    user.wishlist = user.wishlist.filter(item => item.productId.toString() !== productId);
+
+    const afterCount = user.wishlist.length;
 
     await user.save();
-    res.status(200).json({ message: 'Removed from wishlist', wishlist: user.wishlist });
+
+    if (beforeCount === afterCount) {
+      return res.status(404).json({ message: 'Item not found in wishlist', wishlist: user.wishlist });
+    }
+
+    res.status(200).json({ message: 'Product removed from wishlist', wishlist: user.wishlist });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const getWishlist = async (req, res) => {
   try {
