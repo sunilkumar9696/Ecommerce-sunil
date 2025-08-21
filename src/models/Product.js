@@ -19,7 +19,7 @@ const productDetails = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
   name: String,
   description: String,
-  discount: {type: Number , default:0}, // in percentage
+  discount: {type: Number}, // in percentage
   category: {
     type: String,
     enum: ['men', 'women', 'kids', 'accessories'],

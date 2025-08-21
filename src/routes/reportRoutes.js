@@ -12,6 +12,7 @@ router.get('/sales/to', getSalesTo);
 // TOP PRODUCTS
 router.get('/top-products/range', getTopProductsRange);
 router.get('/top-products/from', getTopProductsFrom);
+
 router.get('/top-products/to', getTopProductsTo);
 
 //Inventory Alerts
