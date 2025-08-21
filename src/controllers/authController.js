@@ -14,7 +14,7 @@ export const requestOTP = async (req, res) => {
     
     if (!mobile) return res.status(400).json({ message: 'Mobile number required' });
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
     const otpExpires = Date.now() + 5 * 60 * 1000; // 5 min validity
 
     let user = await User.findOne({ mobile });
