@@ -4,8 +4,8 @@ import { verifyToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/add', addToWishlist);
-router.delete('/remove/:productId', removeFromWishlist);
-router.get('/', getWishlist);
+router.post('/add', verifyToken, addToWishlist);
+router.delete('/remove/:productId', verifyToken, removeFromWishlist);
+router.get('/', verifyToken, getWishlist);
 
 export default router;
