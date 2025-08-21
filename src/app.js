@@ -11,6 +11,7 @@ import cartRoutes from './routes/cartRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import reportRoutes from './routes/reportRoutes.js'
 import wishlistRoutes from './routes/wishlistRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 // import router from './routes/index.js';
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Security middlewares
 app.use(helmet());

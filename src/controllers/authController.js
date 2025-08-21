@@ -15,7 +15,7 @@ export const requestOTP = async (req, res) => {
     if (!mobile) return res.status(400).json({ message: 'Mobile number required' });
 
     const otp = Math.floor(1000 + Math.random() * 9000).toString();
-    const otpExpires = Date.now() + 5 * 60 * 1000; // 5 min validity
+    const otpExpires = Date.now() + 1 * 60 * 1000; // 1 min 
 
     let user = await User.findOne({ mobile });
     if (!user) {
@@ -64,5 +64,29 @@ export const verifyOTP = async (req, res) => {
     res.json({ message: 'OTP verified successfully' ,token });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// step 3. update profile
+export const updateProfile = async (req, res) => {
+  try {
+    const { firstName, lastName, email, gender, wallet } = req.body;
+
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+
+    if(!user) return res.status(404).json({message:"User not found"});
+
+    if(firstName) user.firstName = firstName;
+    if(lastName) user.lastName = lastName;
+    if(email) user.email = email;
+    if(gender) user.gender = gender;
+    if(wallet) user.wallet = wallet;
+
+    await user.save();
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
