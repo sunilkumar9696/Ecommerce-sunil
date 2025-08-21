@@ -2,7 +2,10 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  name: String,
+  firstName: { type: String, trim: true },
+  lastName: { type: String, trim: true },
+  email: { type: String, unique: true},
+  gender: { type: String, enum: ['Male', 'Female', 'Other'] },
   mobile: { type: String, unique: true, required: true },
   wishlist: [
     {
@@ -11,6 +14,10 @@ const userSchema = new mongoose.Schema({
       addedAt: { type: Date, default: Date.now }
     }
   ],
+  wallet: {
+    type: Number,
+    default: 0 // Wallet starts with 0 balance
+  },
   otp: String,
   otpExpires: Date
 }, { timestamps: true });
