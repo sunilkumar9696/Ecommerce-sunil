@@ -24,7 +24,6 @@ export const requestOTP = async (req, res) => {
     user.otp = otp;
     user.otpExpires = otpExpires;
     await user.save();
-    console.log(user);
     
     // Send OTP via SMS
     await client.messages.create({
