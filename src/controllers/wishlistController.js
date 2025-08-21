@@ -5,6 +5,8 @@ export const addToWishlist = async (req, res) => {
   try {
     const { productId, variantId } = req.body;
     const userId = req.user.id; // from auth middleware
+    console.log("add to wish list called " , userId);
+    
 
     if (!productId) {
       return res.status(400).json({ message: 'Product ID is required' });
