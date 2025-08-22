@@ -6,13 +6,11 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middlewares/errorHandler.js';
-import productRoutes from '../src/routes/productRoutes.js'
-import cartRoutes from './routes/cartRoutes.js'
-import authRoutes from './routes/authRoutes.js'
-import reportRoutes from './routes/reportRoutes.js'
-import wishlistRoutes from './routes/wishlistRoutes.js'
-import orderRoutes from './routes/orderRoutes.js'
-// import router from './routes/index.js';
+import productRoutes from '../src/routes/productRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
+import wishlistRoutes from './routes/wishlistRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -24,7 +22,6 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/wishlist', wishlistRoutes);
-app.use('/api/orders', orderRoutes);
 
 // Security middlewares
 app.use(helmet());
