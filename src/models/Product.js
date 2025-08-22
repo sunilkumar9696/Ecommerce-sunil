@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const productDetails = new mongoose.Schema({
-  size: String,
-  color: String,
+  size: [String],
+  color: [String],
   stock: Number,
   price: Number,
-  material : String,
+  material : [String],
   pattern : String,
   occasion : String,
   neckline : String,
