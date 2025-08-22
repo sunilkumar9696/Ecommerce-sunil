@@ -16,6 +16,6 @@ router.get('/top-products/from', getTopProductsFrom);
 router.get('/top-products/to', getTopProductsTo);
 
 //Inventory Alerts
-router.get('/inventory', verifyToken, getInventoryAlerts);
+router.get('/inventory', getInventoryAlerts);
 
 export default router;

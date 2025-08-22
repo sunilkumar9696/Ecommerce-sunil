@@ -11,10 +11,10 @@ import {
 
 const router = express.Router();
 
-router.get('/',verifyToken, getProducts);
-router.get('/:id',verifyToken, getProductById);
-router.post('/', upload.any(),verifyToken, createProduct);
-router.put('/:id', upload.any(), verifyToken, updateProduct);
-router.delete('/:id',verifyToken, deleteProduct);
+router.get('/', getProducts);
+router.get('/:id', getProductById);
+router.post('/', upload.any(), createProduct);
+router.put('/:id', upload.any(), updateProduct);
+router.delete('/:id', deleteProduct);
 
 export default router;
