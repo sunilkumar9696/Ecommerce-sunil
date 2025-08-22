@@ -22,6 +22,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Security middlewares
 app.use(helmet());
