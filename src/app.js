@@ -11,17 +11,19 @@ import cartRoutes from './routes/cartRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
+import addressRoutes from './routes/addressRoutes.js';
 
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors ({origin : '*'}))
+app.use(cors ({origin : '*'}));
 
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/address' ,addressRoutes);
 
 // Security middlewares
 app.use(helmet());

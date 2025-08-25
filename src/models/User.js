@@ -14,6 +14,15 @@ const userSchema = new mongoose.Schema({
       addedAt: { type: Date, default: Date.now }
     }
   ],
+  addresses: [
+  {
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+    type: { type: String, required: true }, // e.g., "Home", "Office"
+    address: { type: String, required: true },
+    pincode: { type: String, required: true },
+    landmark: { type: String }
+  }
+],
   wallet: {
     type: Number,
     default: 0 // Wallet starts with 0 balance
