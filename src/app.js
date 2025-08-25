@@ -12,7 +12,6 @@ import authRoutes from './routes/authRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
 import addressRoutes from './routes/addressRoutes.js';
-import paymentRoutes from './routes/paymentRoutes.js'
 
 dotenv.config();
 const app = express();
