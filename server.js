@@ -4,7 +4,6 @@ dotenv.config();
 import app from './src/app.js';
 import connectDB from './src/config/db.js';
 
-console.log("API KEY from env:", process.env.CLOUDINARY_API_KEY);
 // Set the port from .env or fallback to 5000
 const PORT = process.env.PORT || 5000
 
