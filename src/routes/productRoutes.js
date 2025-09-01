@@ -1,5 +1,5 @@
 import express from 'express';
-import upload from '../middlewares/upload.js';
+import uploadProduct from '../middlewares/uploadProduct.js';
 import { verifyToken } from '../middlewares/authMiddleware.js';
 import {
   getProducts,
@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.get('/', getProducts);
 router.get('/:id', getProductById);
-router.post('/', upload.any(), createProduct);
-router.put('/:id', upload.any(), updateProduct);
+router.post('/', uploadProduct.any(), createProduct);
+router.put('/:id', uploadProduct.any(), updateProduct);
 router.delete('/:id', deleteProduct);
 
 export default router;

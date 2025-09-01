@@ -1,4 +1,5 @@
 import Product from '../models/Product.js';
+import Category from '../models/Category.js'
 
 // GET /api/products
 export const getProducts = async (req, res) => {
@@ -10,6 +11,7 @@ export const getProducts = async (req, res) => {
     };
 
     const products = await Product.find(filter)
+      .populate('category', 'name description')
       .skip((page - 1) * limit)
       .limit(Number(limit));
 
@@ -33,7 +35,7 @@ export const getProductById = async (req, res) => {
 // POST /api/products
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, category, subcategory, variants } = req.body;
+    const { name, description, variants ,category } = req.body;
 
     let parsedVariants = [];
     try {
@@ -47,12 +49,16 @@ export const createProduct = async (req, res) => {
       public_id: file.filename // Cloudinary public_id
     })) : [];
 
+    const existingCategory = await Category.findById(category);
+    if (!existingCategory) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
     const product = new Product({
       name,
       description,
-      category,
-      subcategory,
       images,
+      category,
       variants: parsedVariants
     });
 
@@ -66,7 +72,7 @@ export const createProduct = async (req, res) => {
 // PUT /api/products/:id
 export const updateProduct = async (req, res) => {
   try {
-    const { name, description, category, subcategory, variants } = req.body;
+    const { name, description, category, variants } = req.body;
 
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
@@ -83,11 +89,15 @@ export const updateProduct = async (req, res) => {
       }));
     }
 
+    if (category) {
+      const categoryExists = await Category.findById(category);
+      if (!categoryExists) return res.status(400).json({ message: 'Invalid category ID' });
+      product.category = category;
+    }
+
     // Update other fields
     if (name) product.name = name;
     if (description) product.description = description;
-    if (category) product.category = category;
-    if (subcategory) product.subcategory = subcategory;
     if (variants) product.variants = JSON.parse(variants); // if provided
 
     const updated = await product.save();
@@ -102,12 +112,8 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: 'Product not found' });
-    for (const img of product.images) {
-      await cloudinary.uploader.destroy(img.public_id);
-    }
-
-    await product.deleteOne();
+    if (!deleted) return res.status(404).json({ message: 'Product Deleted Successfully' });
+    
     res.status(200).json({ message: 'Product deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });

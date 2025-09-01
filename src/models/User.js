@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   addresses: [
   {
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
-    type: { type: String, required: true }, // e.g., "Home", "Office"
+    type: { type: String, required: true }, // e.g., "Home", "Office".
     address: { type: String, required: true },
     pincode: { type: String, required: true },
     landmark: { type: String }

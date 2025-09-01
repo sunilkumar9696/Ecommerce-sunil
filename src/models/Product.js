@@ -5,40 +5,36 @@ const productDetails = new mongoose.Schema({
   color: [String],
   stock: Number,
   price: Number,
-  material : [String],
-  pattern : String,
-  occasion : String,
-  neckline : String,
-  closure : String,
-  packSize : String,
-  sleeveStyle : String,
-  careInstructions : String,
-  packCotains : String
+  material: [String],
+  pattern: String,
+  occasion: String,
+  neckline: String,
+  closure: String,
+  packSize: String,
+  sleeveStyle: String,
+  careInstructions: String,
+  packCotains: String
 });
 
 const productSchema = new mongoose.Schema({
   name: String,
   description: String,
-  discount: {type: Number}, // in percentage
-  category: {
-    type: String,
-    enum: ['men', 'women', 'kids', 'accessories'],
-    required: true,
-  },
-  subcategory: {
-    type: String,
-    enum: ['men', 'women', 'kids'], // only used for accessories
-  },
+  discount: { type: Number }, // percentage
   images: [
-  {
-    url: { type: String, required: true },
-    public_id: { type: String, required: true }
-  }
-],
+    {
+      url: { type: String, required: true },
+      public_id: { type: String, required: true }
+    }
+  ],
+   category: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Category', // Reference Category model
+    required: true 
+  },
   variants: [productDetails],
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   }
 });
 

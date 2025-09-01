@@ -27,7 +27,8 @@ export const requestOTP = async (req, res) => {
     
     // Send OTP via SMS
     await client.messages.create({
-      body: `Your OTP is ${otp}`,
+      body: `Your OTP For User LOGIN is
+            -->  ${otp}`,
       from: process.env.TWILIO_PHONE,
       to: mobile
     });
@@ -36,7 +37,7 @@ export const requestOTP = async (req, res) => {
   } catch (error) {
     console.log("Twilio error ",error);
     
-    res.status(500).json({ error: error.message });
+    res.status(200).status(500).json({ error: error.message });
   }
 };
 
@@ -61,7 +62,7 @@ export const verifyOTP = async (req, res) => {
     );
     
     
-    res.json({ message: 'OTP verified successfully' ,token });
+    res.status(200).json({ message: 'OTP verified successfully' ,token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -8,10 +8,16 @@ import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middlewares/errorHandler.js';
 import productRoutes from '../src/routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
-import authRoutes from './routes/authRoutes.js';
+import userAuthRoutes from './routes/userAuthRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
 import addressRoutes from './routes/addressRoutes.js';
+import adminAuthRoutes from './routes/adminAuthRoutes.js';
+import roleRoutes from './routes/rolesRoutes.js';
+import {verifyToken} from './middlewares/authMiddleware.js';
+import {verifySuperAdmin} from './middlewares/verifySuperAdmin.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import landingRoutes from './routes/landingRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -20,10 +26,14 @@ app.use(cors({ origin: '*' }));
 
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', userAuthRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/address', addressRoutes);
+app.use('/api/admin', adminAuthRoutes);
+app.use('/api/roles' , verifyToken, verifySuperAdmin, roleRoutes);
+app.use('/api/category' ,categoryRoutes);
+app.use('/api/landingPage' ,landingRoutes );
 
 // Security middlewares
 app.use(helmet());
