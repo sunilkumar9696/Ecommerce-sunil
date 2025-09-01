@@ -18,6 +18,7 @@ import {verifyToken} from './middlewares/authMiddleware.js';
 import {verifySuperAdmin} from './middlewares/verifySuperAdmin.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import landingRoutes from './routes/landingRoutes.js';
+import couponRoutes from './routes/couponRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/admin', adminAuthRoutes);
 app.use('/api/roles' , verifyToken, verifySuperAdmin, roleRoutes);
 app.use('/api/category' ,categoryRoutes);
 app.use('/api/landingPage' ,landingRoutes );
+app.use('/api/coupons', verifyToken, verifySuperAdmin, couponRoutes);
 
 // Security middlewares
 app.use(helmet());
